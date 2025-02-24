@@ -1,12 +1,11 @@
 import {React, useState} from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const [login, setLogin] = useState(false);
   function handleLogin() {
     if(!login){
-      const login = fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-      })
+      const resp = fetch('http://localhost:3000/auth/login')
       .then(response => response.json())
       .then((data) =>{
         if(data.message){
@@ -21,9 +20,9 @@ const Header = () => {
     <header>
       <nav>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><NavLink to="#">Home</NavLink></li>
+          <li><NavLink to="#">About</NavLink></li>
+          <li><NavLink to="/send-bulk">Send Bulk</NavLink></li>
           <li>
             <button onClick = {handleLogin}>{login ? 'Logout' : 'Login'}</button>
           </li>
