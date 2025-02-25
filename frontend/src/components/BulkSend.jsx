@@ -8,6 +8,10 @@ const BulkSend = () => {
     function handleSend() {
         fetch('http://localhost:3000/wa/send-bulk', {
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({numbers}),
         })
         .then(response => response.json())
         .then(data => console.log(data))
