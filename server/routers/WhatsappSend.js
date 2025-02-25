@@ -19,6 +19,10 @@ const processQueue = async () => {
 
     console.log(number, " - ", messageCount)
 
+    const files = fs.readdirSync(__dirname+'/uploads')
+    const filePaths = files.map((file)=> __dirname+'/uploads/'+file)
+    console.log(filePaths)
+
     // Unified error handling for media + message sending
     const media =  MessageMedia.fromFilePath(path.join(__dirname, './uploads/img.jpg'))
       client.sendMessage(`${number}@c.us`, media)
