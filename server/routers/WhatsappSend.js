@@ -1,10 +1,10 @@
 const Router = require('express').Router();
 const {client} = require('./Whatsapp-client');
-const {MessageMedia} = require('whatsapp-web.js')
+const {MessageMedia, Buttons} = require('whatsapp-web.js')
 const path = require('path')
 const fs = require('fs')
 const math = require('mathjs')
-const delay = require('./Utils')
+const {delay, getMimeType} = require('./Utils')
 
 let messageQueue = [];
 let isSending = false;
@@ -16,21 +16,27 @@ let messageCount = 0; // Counter to track the number of messages sent
 const processQueue = async () => {
   if (!isSending && messageQueue.length > 0) {
     isSending = true;
-    const { number, message, resolve, reject } = messageQueue.shift();
+    const { number, message= 'HI', resolve, reject } = messageQueue.shift();
 
     console.log(number, " - ", messageCount)
 
     const files = fs.readdirSync(__dirname+'/uploads')
     const filePaths = files.map((file)=> __dirname+'/uploads/'+file)
-    
+
     for(const filePath of filePaths){
-      console.log(filePath)
-      await delay(5000)
+      const mimeType = getMimeType(filePath);
+      const media = MessageMedia.fromFilePath(filePath, mimeType)
+      // client.sendMessage(`${number}@c.us`, media, { caption: "caption" })
+      client.sendMessage(`${number}@c.us`, media)
+      .then(()=>{console.log('File sent:', filePath);})
+      .catch(err => {console.error('Error sending file:', err)})
+
+      console.log('File sent..')
+      await delay(3000, 7000)
     }
 
     // Unified error handling for media + message sending
-    const media =  MessageMedia.fromFilePath(path.join(__dirname, './uploads/img.jpg'))
-      client.sendMessage(`${number}@c.us`, media)
+      client.sendMessage(`${number}@c.us`, message)
       .then(resolve)  // Resolve individual promise
       .catch(reject)  // Reject individual promise
       .finally(() => {
