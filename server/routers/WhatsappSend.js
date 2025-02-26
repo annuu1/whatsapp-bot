@@ -4,6 +4,7 @@ const {MessageMedia} = require('whatsapp-web.js')
 const path = require('path')
 const fs = require('fs')
 const math = require('mathjs')
+const delay = require('./Utils')
 
 let messageQueue = [];
 let isSending = false;
@@ -21,7 +22,11 @@ const processQueue = async () => {
 
     const files = fs.readdirSync(__dirname+'/uploads')
     const filePaths = files.map((file)=> __dirname+'/uploads/'+file)
-    console.log(filePaths)
+    
+    for(const filePath of filePaths){
+      console.log(filePath)
+      await delay(5000)
+    }
 
     // Unified error handling for media + message sending
     const media =  MessageMedia.fromFilePath(path.join(__dirname, './uploads/img.jpg'))
