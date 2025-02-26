@@ -35,7 +35,7 @@ const processQueue = async () => {
         console.error('Error sending file:', err, 'File path:', filePath);
       }})
 
-      console.log('File sent..')
+      // console.log('File sent..')
       await delay(3000, 7000)
     }
 
