@@ -16,7 +16,7 @@ let messageCount = 0; // Counter to track the number of messages sent
 const processQueue = async () => {
   if (!isSending && messageQueue.length > 0) {
     isSending = true;
-    const { number, message= 'HI', resolve, reject } = messageQueue.shift();
+    const { number, message= '', resolve, reject } = messageQueue.shift();
 
     console.log(number, " - ", messageCount)
 
@@ -29,7 +29,11 @@ const processQueue = async () => {
       // client.sendMessage(`${number}@c.us`, media, { caption: "caption" })
       client.sendMessage(`${number}@c.us`, media)
       .then(()=>{console.log('File sent:', filePath);})
-      .catch(err => {console.error('Error sending file:', err)})
+      .catch(err => {if (mimeType === 'video/mp4') {
+        console.error('Error sending MP4 file:', err, 'File path:', filePath);
+      } else {
+        console.error('Error sending file:', err, 'File path:', filePath);
+      }})
 
       console.log('File sent..')
       await delay(3000, 7000)
