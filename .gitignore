@@ -1,3 +1,6 @@
 node_*/
 node_modules/
 .wwebj*
+*.pdf
+*.jpg
+*.mp4
