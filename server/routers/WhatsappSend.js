@@ -16,7 +16,7 @@ let messageCount = 0; // Counter to track the number of messages sent
 const processQueue = async () => {
   if (!isSending && messageQueue.length > 0) {
     isSending = true;
-    const { number, message= '', resolve, reject } = messageQueue.shift();
+    let { number, message= '', resolve, reject } = messageQueue.shift();
 
     console.log(number, " - ", messageCount)
 
@@ -39,6 +39,40 @@ const processQueue = async () => {
       await delay(3000, 7000)
     }
 
+    message = `4 Spacious Balconies 
+Big Size 3bhk Flats From 57 Lac 
+Prime Location |Near D-mart, Akshaya Patra Mahal Road, jagatpura Jaipur 
+
+https://www.instagram.com/therabbanigroup?igsh=NHpqd25neDc4N2k%3D&utm_source=qr
+
+✔️ Loan Facility: Up To 90% Loanable From All Major Banks 🏦
+✔️ Approvals: RERA&JDA
+Approved
+
+🌟 Exclusive Amenities For A Premium Lifestyle:
+🏋️ State-of-the-art Gymnasium 
+🕺 Spacious Community Hall
+🚘 Dedicated Car Parking 
+👮‍♂️ 24x7 Security With Cctv Surveillance 
+🔋 Power Backup (Tata Generator) 
+🪪 Smart Card Entrance 
+💳 High-speed Lifts (02) 
+🎛️ Inverter Fittings & Rr Switches 
+🛀 Premium Cera Bath Fittings 
+⏲️ Fully Modular Kitchen 
+🌅 Private Terrace (Optional) 
+🌳 Landscaped Garden & Kids’ Play Area 
+🧘‍♀️ Yoga & Meditation Hall 
+
+📍 Limited Units Available – Book Your Visit Today!
+
+📞 Call/whatsapp Us Now:
+📲 **
+https://maps.google.com/?q=26.795807,75.874054
+
+⭐️𝗬𝗼𝘂𝗿 𝗗𝗿𝗲𝗮𝗺 𝗛𝗼𝗺𝗲 𝗔𝘄𝗮𝗶𝘁𝘀!⭐️
+Don’t Miss Out On This Incredible Opportunity To Own A Luxurious Flat In One Of Jaipur’s Most Sought-after Locations. Schedule A Visit Now!`
+
     // Unified error handling for media + message sending
       client.sendMessage(`${number}@c.us`, message)
       .then(resolve)  // Resolve individual promise
@@ -48,7 +82,7 @@ const processQueue = async () => {
         
         // Delay logic
         const delay = messageCount >= 50 ? 
-          Math.random() * 20 + 30 :  // 30-50s after 50 messages
+              Math.random(3, 6)*100000 :  // 30-50s after 50 messages
           math.random(5, 14) * 1000;
 
         messageCount = messageCount >= 50 ? 0 : messageCount;
